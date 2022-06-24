@@ -83,7 +83,7 @@ if (isset($_POST['metodo'])) {
     }
 
     unset($_SESSION['cart']);
-    header("Location: ../index.php");
+    header("Location: ./historial.php");
   }
 }
 
