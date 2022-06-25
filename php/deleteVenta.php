@@ -11,5 +11,6 @@ if (isset($_GET['id'])) {
     $qryUpdate = $conn->query('UPDATE stock_local SET stock = stock + ' . $result['cantidad'] . ' WHERE idPRODUCTO = ' . $result['idPRODUCTO'] . ' AND idLOCAL = ' . $result['idLOCAL']);
   }
 }
-
+$_SESSION['ventaEliminada'] = 'Se eliminó la venta!!!';
+header("Location: ./historial.php");
 echo $footer_html;

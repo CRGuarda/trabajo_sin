@@ -9,6 +9,12 @@ if (isset($_SESSION['purchase'])) {
   unset($_SESSION['purchase']);
 }
 
+if (isset($_SESSION['ventaEliminada'])) {
+  echo
+  '<script language="javascript">alert("' . $_SESSION['ventaEliminada'] . '");</script>';
+  unset($_SESSION['ventaEliminada']);
+}
+
 if (isset($_SESSION['user_id'])) {
   echo '<div class=" ms-2 mt-2">
   <h1>Historial de ventas</h1>
