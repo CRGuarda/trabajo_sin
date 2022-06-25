@@ -78,7 +78,7 @@ if (!empty($_POST["local"]) && !empty($_POST["ciudad"])) {
   $local = $_POST["local"];
   $ciudad = $_POST["ciudad"];
 
-  $validar = $conn->query("SELECT * FROM locales WHERE local = '$local'");
+  $validar = $conn->query("SELECT * FROM locales WHERE idCIUDAD = $ciudad");
 
   if (mysqli_num_rows($validar) == 0) {
     $qry2 = $conn->query("INSERT INTO locales (local, idCIUDAD) VALUES ('$local','$ciudad')");
@@ -87,7 +87,7 @@ if (!empty($_POST["local"]) && !empty($_POST["ciudad"])) {
     }
   } else {
     echo
-    '<script language="javascript">alert("ERROR AL REGISTRAR LOCAL. Local ya existe. Intente nuevamente.");</script>';
+    '<script language="javascript">alert("No se puede crear más de un local por ciudad");</script>';
   };
 }
 

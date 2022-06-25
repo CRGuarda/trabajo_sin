@@ -17,7 +17,7 @@ if (isset($_GET['pago'])) {
         <select class="form-select" name="metodo" id="metodo" required>
     <option value="">--Escoge un metodo--</option>';
   while ($result = mysqli_fetch_array($qry)) {
-    echo '<option value="' . $result['idMETODO_PAGO'] . '">' . $result['metodo_pago'] . '</option>';
+    echo '<option value="' . $result['idMETODOS_PAGO'] . '">' . $result['metodo_pago'] . '</option>';
   }
   echo '</select>';
   echo    '</div>';
@@ -62,11 +62,31 @@ if (isset($_GET['pago'])) {
   echo '</tbody>
 </table>';
   echo "<h4>Total a pagar: <b>S/ $total</b></h4>";
-  echo  '<button type="submit" class="btn btn-primary">Confirmar venta</button>';
+  echo  '<button type="submit" class="btn btn-primary" name="btnVenta">Confirmar venta</button>';
   echo '</form>';
 }
 
+if (isset($_POST['metodo'])) {
 
+  $_SESSION['idMetodoPago'] = $_POST['metodo'];
+  $qryLocalVenta = $conn->query('SELECT idLOCAL FROM locales WHERE idCIUDAD =' . $_SESSION['idCiudad']);
+  $localVenta = mysqli_fetch_array($qryLocalVenta);
+  $qryVentas = $conn->query('INSERT INTO ventas (fecha, estado, idUSUARIO, idMETODOS_PAGO, idLOCAL) VALUES ( SYSDATE(), "ACTIVO", ' . $_SESSION['user_id'] . ', ' . $_SESSION['idMetodoPago'] . ', ' . $localVenta['idLOCAL'] . ')');
+
+  if ($qryVentas) {
+    foreach ($_SESSION["cart"] as $key => $value) {
+      $qryIDVenta = $conn->query('SELECT idVENTA from ventas WHERE idUSUARIO= ' . $_SESSION['user_id'] . ' AND idMETODOS_PAGO = ' . $_SESSION['idMetodoPago'] . ' AND idLOCAL= ' . $localVenta['idLOCAL'] . ' ORDER BY fecha DESC LIMIT 1');
+      $qryPrecio = $conn->query('SELECT precio FROM productos WHERE idPRODUCTO = ' . $key);
+      $precio = mysqli_fetch_array($qryPrecio);
+      $idVenta = mysqli_fetch_array($qryIDVenta);
+      $qryDetalleVentas = $conn->query('INSERT INTO detalle_ventas (cantidad, idPRODUCTO, idVENTA, precioVenta) VALUES ( ' . $value['qty'] . ', ' . $key . ',' . $idVenta['idVENTA'] . ', ' . $precio['precio'] . ' )');
+      $qrySTOCK = $conn->query('UPDATE stock_local SET stock=stock-'. $value['qty'] .' WHERE idPRODUCTO='. $key .' AND idLOCAL= '.  $localVenta['idLOCAL']);
+    }
+    
+    unset($_SESSION['cart']);
+    header("Location: ./historial.php");
+  }
+}
 
 
 

@@ -26,7 +26,7 @@ include "./php/header.php";
         <div class="collapse navbar-collapse" id="navbarColor01">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="">Inicio
+              <a class="nav-link" href="">Inicio
                 <span class="visually-hidden">(current)</span>
               </a>
             </li>
@@ -37,15 +37,17 @@ include "./php/header.php";
               <a class="nav-link" href="./php/login.php"><?php
                                                           echo isset($_SESSION['user_id']) ? 'Perfil' : 'Iniciar sesión'; ?></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./php/about.php">Acerca</a>
-            </li>
 
             <?php
             echo isset($_SESSION['user_id']) ? '<li class="nav-item">
               <a class="nav-link" href="./php/carrito.php">Carrito</a>
-            </li>' : ''; ?>
-
+            </li>' : '';
+            echo isset($_SESSION["user_id"]) ? "<li class='nav-item'>
+              <a class='nav-link' href='./php/historial.php'>Historial</a>
+            </li>" : '';     ?>
+            <li class="nav-item">
+              <a class="nav-link" href="./php/about.php">Acerca</a>
+            </li>
           </ul>
           <form action="" method="post" class="d-flex">
             <input class="form-control me-sm-2" type="text" placeholder="Buscar">

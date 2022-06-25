@@ -1,4 +1,3 @@
 SetEnv PHP_MYSQL_USER trabajo_sin
 SetEnv PHP_MYSQL_PASSWORD trabajo_sin
 SetEnv PHP_MYSQL_HOST localhost
-SetEnv PHP_MYSQL_DB sin_grupo_10

@@ -49,7 +49,7 @@ if ($conn) {
     if (mysqli_num_rows($qry2) == 1) {
 
       while ($result2 = mysqli_fetch_array($qry2)) {
-        $userSession = isset($_SESSION['user_id']) ? '<a href="./add_to_cart.php?id=' . $result['idPRODUCTO'] . '">Añadir al carrito 🛒</a></div></div>' : '</div></div>';
+        $userSession = isset($_SESSION['user_id']) ? '<a href="./add_to_cart.php?id=' . $result['idPRODUCTO'] . '">Añadir al carrito 🛒</a>' : '';
         $addValidate = ($result['stock'] == 0) ? '' : $userSession;
         $stockValidate = (isset($_SESSION['user_id'])) ? ' - Stock: ' . $result['stock'] : '';
         $alert = isset($_SESSION["alert"]) ? '<script language="javascript">alert("' . $_SESSION['alert'] . '");</script>' : '';
@@ -61,7 +61,8 @@ if ($conn) {
             <img class="picture" src="../img/' . $result['imagen'] . '" alt="imagen de prueba">
             <p class="card-text mt-2">' . $result['descProducto'] . '</p>
             <a href="./detalleProducto.php?id=' . $result['idPRODUCTO'] . '"><strong>Ver detalle</strong></a><p>
-            ' . $addValidate . $alert;
+            ' . $addValidate . $alert . '</div>
+  </div>';
         unset($_SESSION["alert"]);
         /*  try {
           if (isset($_SESSION['user_id'])) {
@@ -78,7 +79,8 @@ if ($conn) {
       }
     }
   }
-  echo '</div>';
+  /* echo '</div>
+  </div>'; */
 }
 
 

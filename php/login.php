@@ -14,7 +14,12 @@ if (isset($_SESSION['user_id'])) {
   if ($_SESSION['user_rol'] == 1) {
     echo $admin;
   }
-
+  echo '<div class="me-3 row">
+    <div class="alert alert-dismissible alert-warning">
+  <h4 class="alert-heading">ALERTA!</h4>
+  <p class="mb-0">Cambiar de ciudad eliminará tu carrito de compras.</p>
+</div>
+</div>';
   $qryCiudad = $conn->query("SELECT * from ciudades WHERE idCIUDAD <> " . $_SESSION['idCiudad']);
   echo
   '<form action="" method=post>
@@ -34,7 +39,6 @@ if (isset($_SESSION['user_id'])) {
   echo  '</div>';
   echo  '<button type="submit" class="btn btn-primary ms-5 mb-5 col-sm-2"name="cambioCiudad">Cambiar ciudad</button>';
   echo '</form>';
-
 
 
   echo '<form action="./login.php" method=post>
@@ -108,12 +112,14 @@ if (isset($_POST['logout'])) {
 }
 
 if (isset($_POST['cambioCiudad'])) {
+
   $update = $conn->query("UPDATE usuarios SET idCIUDAD = " . $_POST['ciudad'] . " WHERE idUSUARIO = " . $_SESSION['user_id']);
   if ($update) {
     $query = $conn->query("SELECT * FROM ciudades WHERE idCIUDAD =" . $_POST['ciudad']);
     $ciudad = mysqli_fetch_array($query);
     $_SESSION['ciudad'] = $ciudad['ciudad'];
     $_SESSION['idCiudad'] = $_POST['ciudad'];
+    unset($_SESSION['cart']);
   }
   header("Location: ./login.php");
 }

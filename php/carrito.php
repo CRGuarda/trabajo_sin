@@ -48,7 +48,7 @@ if (isset($_SESSION['idCiudad'])) {
           echo '<a href="remove_from_cart.php?add=1&id=' . $key . '">Aumentar</a>&nbsp;&nbsp;';
         }
 
-        echo '<a href="remove_from_cart.php?id=' . $key . '">Disminuir</a>&nbsp;&nbsp;';
+        echo '<a href="remove_from_cart.php?id=' . $key  . '">Disminuir</a>&nbsp;&nbsp;';
         echo '<a href="remove_from_cart.php?remove_all=1&id=' . $key . '">Eliminar</a>';
         echo '</td>';
         echo '</tr>';
@@ -59,7 +59,7 @@ if (isset($_SESSION['idCiudad'])) {
 </table>';
     echo '<a href="./purchase.php?pago=1"><button class= "btn btn-primary ms-3">Check-out</button></a>';
   } else {
-    echo '<h4>NO TIENE PRODUCTOS EN EL CARRITO2</h4>';
+    echo '<h4>NO TIENE PRODUCTOS EN EL CARRITO!!! COMPRE, POR FAVOR 😁😁😁😁😁😁</h4>';
   }
 } else {
   echo '<h3 class="ms-3 mt-2"><a href="./login.php">INICIE SESIÓN<a> PARA ENTRAR AL CARRITO</h4>';

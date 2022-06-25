@@ -63,7 +63,7 @@ if (!empty($_POST["producto"]) && !empty($_POST["precio"]) && !empty($_POST["des
   $descripcion = $_POST["descripcion"];
   $marca = $_POST["marca"];
 
-  $validar = $conn->query("SELECT producto FROM productos WHERE producto = '$producto'");
+  $validar = $conn->query("SELECT producto FROM productos WHERE producto = '$producto' AND idMARCA = '$marca'");
 
   if (mysqli_num_rows($validar) == 0) {
     $qry2 = $conn->query("INSERT INTO productos (producto, precio, imagen, descProducto, idMARCA) VALUES ('$producto','$precio','$filename','$descripcion','$marca')");
