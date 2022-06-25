@@ -41,7 +41,10 @@ include "./php/header.php";
             <?php
             echo isset($_SESSION['user_id']) ? '<li class="nav-item">
               <a class="nav-link" href="./php/carrito.php">Carrito</a>
-            </li>' : ''; ?>
+            </li>' : '';
+            echo isset($_SESSION["user_id"]) ? "<li class='nav-item'>
+              <a class='nav-link' href='./php/historial.php'>Historial</a>
+            </li>" : '';     ?>
             <li class="nav-item">
               <a class="nav-link" href="./php/about.php">Acerca</a>
             </li>

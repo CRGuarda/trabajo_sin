@@ -5,6 +5,9 @@ $userValidate = isset($_SESSION['user_id']) ? 'Perfil' : 'Iniciar sesión';
 $carritoValidate = isset($_SESSION["user_id"]) ? "<li class='nav-item'>
               <a class='nav-link' href='./carrito.php'>Carrito</a>
             </li>" : '';
+$historialValidate = isset($_SESSION["user_id"]) ? "<li class='nav-item'>
+              <a class='nav-link' href='./historial.php'>Historial</a>
+            </li>" : '';            
 $header_html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +43,8 @@ $header_html = '
               <a class="nav-link" href="./login.php">' . $userValidate . '</a>
             </li>
             '
-  . $carritoValidate . '<li class="nav-item">
+  . $carritoValidate . '<li class="nav-item">'
+  . $historialValidate . '<li class="nav-item">
               <a class="nav-link" href="./about.php">Acerca</a>
             </li>
           </ul>

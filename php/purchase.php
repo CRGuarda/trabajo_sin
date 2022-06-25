@@ -80,10 +80,11 @@ if (isset($_POST['metodo'])) {
       $precio = mysqli_fetch_array($qryPrecio);
       $idVenta = mysqli_fetch_array($qryIDVenta);
       $qryDetalleVentas = $conn->query('INSERT INTO detalle_ventas (cantidad, idPRODUCTO, idVENTA, precioVenta) VALUES ( ' . $value['qty'] . ', ' . $key . ',' . $idVenta['idVENTA'] . ', ' . $precio['precio'] . ' )');
+      $qrySTOCK = $conn->query('UPDATE stock_local SET stock=stock-'. $value['qty'] .' WHERE idPRODUCTO='. $key .' AND idLOCAL= '.  $localVenta['idLOCAL']);
     }
-
+    
     unset($_SESSION['cart']);
-    header("Location: ../index.php");
+    header("Location: ./historial.php");
   }
 }
 
