@@ -73,16 +73,18 @@ if (isset($_POST['metodo'])) {
   $localVenta = mysqli_fetch_array($qryLocalVenta);
   $qryVentas = $conn->query('INSERT INTO ventas (fecha, estado, idUSUARIO, idMETODOS_PAGO, idLOCAL) VALUES ( SYSDATE(), "ACTIVO", ' . $_SESSION['user_id'] . ', ' . $_SESSION['idMetodoPago'] . ', ' . $localVenta['idLOCAL'] . ')');
 
-  if ($qryVentas) {
+  if ($qryVentas && isset($_POST["btnVenta"])) {
     foreach ($_SESSION["cart"] as $key => $value) {
       $qryIDVenta = $conn->query('SELECT idVENTA from ventas WHERE idUSUARIO= ' . $_SESSION['user_id'] . ' AND idMETODOS_PAGO = ' . $_SESSION['idMetodoPago'] . ' AND idLOCAL= ' . $localVenta['idLOCAL'] . ' ORDER BY fecha DESC LIMIT 1');
       $qryPrecio = $conn->query('SELECT precio FROM productos WHERE idPRODUCTO = ' . $key);
       $precio = mysqli_fetch_array($qryPrecio);
       $idVenta = mysqli_fetch_array($qryIDVenta);
+      echo $key . ' - ' . $value;
       $qryDetalleVentas = $conn->query('INSERT INTO detalle_ventas (cantidad, idPRODUCTO, idVENTA, precioVenta) VALUES ( ' . $value['qty'] . ', ' . $key . ',' . $idVenta['idVENTA'] . ', ' . $precio['precio'] . ' )');
-      $qrySTOCK = $conn->query('UPDATE stock_local SET stock=stock-'. $value['qty'] .' WHERE idPRODUCTO='. $key .' AND idLOCAL= '.  $localVenta['idLOCAL']);
+      $qrySTOCK = $conn->query('UPDATE stock_local SET stock=stock-' . $value['qty'] . ' WHERE idPRODUCTO=' . $key . ' AND idLOCAL= ' .  $localVenta['idLOCAL']);
+      $_SESSION['purchase'] = 'Compra exitosa!!!!';
     }
-    
+
     unset($_SESSION['cart']);
     header("Location: ./historial.php");
   }
